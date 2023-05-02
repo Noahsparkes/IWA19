@@ -1,8 +1,4 @@
 
-
-
-
-
 matches = books
 page = 1;
 
@@ -20,10 +16,8 @@ night = {
 }
 
 
-
-
 fragment = document.createDocumentFragment();
- extracted = books.slice(0, 36); //look at 
+ extracted = books.slice(0, 36); 
 
 for (let i = 0; i < extracted.length; i++) {
   const { author, image, title, id } = extracted[i];
@@ -33,7 +27,7 @@ for (let i = 0; i < extracted.length; i++) {
     id,
     image,
     title,
-  });
+  });//destructuring of these elements
 
   fragment.appendChild(preview);
 }
@@ -71,67 +65,66 @@ for ([id, name];Object.entries(authors); id++) {
     element.value = value
     element = text
     authors.appendChild(element)
-}
-
+}// reveiw this snippet later
 
 
 
 /**
- * The first line of code adds(appends) a list of authors to a section on a web page.
- * The second line in this snippet checks if the user has set their computer or phone to a "dark" or "light" color scheme, 
- * and sets the web page's color scheme accordingly.
- * v = window.matchMedia line, sets a variable 'v' to either "night" or "day" based on the user's preferred color scheme.
- * The fouth line of code sets the web page's dark color value to the dark value specified in a css object.
- * documentElement.style.setProperty('--color-light', css[v].light) does exactly the same but sets the color value to 'light' value,
- * specified in the css object.
- * line six checks if the text on a "Show more" button is set to "Show more(books.length - BOOKS_PER_PAGE)".
- * Data-list-button.disabled enables or disables the "Show more" button based on whether there are any more books left to display on the web page.
- * Data-list-button.html sets text on the'show more'to 'show more' and displays the remaining number of books to show.
+ * The code appends the 'authors' element to the 'data-search-authors' element.
+ * If the user's preferred color scheme is dark, the variable 'v' is set to 'night'; otherwise, it is set to 'day'.
+ * The 'color-dark' and 'color-light' custom CSS properties are set on the 'documentElement' element using the values from the 'css' object based on the 'v' variable.
+ * The number of remaining books is calculated based on the current page and the number of books per page.
+ * The 'data-list-button' element's inner HTML is updated to include the 'Show more' text and the number of remaining books.
+ * The 'data-list-button' element is disabled if there are no remaining books.
  * @authors
  */
-data-search-authors.appendChild(authors) 
+data-search-authors.appendChild(authors);
 
-data-settings-theme.value === window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day'
-v = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches? 'night' | 'day'
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  var v = 'night';
+} else {
+  var v = 'day';
+}
 
-documentElement.style.setProperty('--color-dark', css[v].dark);
-documentElement.style.setProperty('--color-light', css[v].light);
-data-list-button == "Show more (books.length - BOOKS_PER_PAGE)"
+document.documentElement.style.setProperty('--color-dark', css[v].dark);
+document.documentElement.style.setProperty('--color-light', css[v].light);
 
-data-list-button.disabled ==!(matches.length - [page * BOOKS_PER_PAGE] > 0)
+var remainingBooks = matches.length - (page * BOOKS_PER_PAGE);
+data-list-button.innerHTML = `                       
+  <span>Show more</span>
+  <span class="list__remaining">${remainingBooks > 0 ? remainingBooks : 0}</span>
+`;
 
-data-list-button.innerHTML = /* html */ [
-    '<span>Show more</span>',
-    '<span class="list__remaining"> (${matches.length - [page * BOOKS_PER_PAGE] > 0 ? matches.length - [page * BOOKS_PER_PAGE] : 0})</span>',
-]
+data-list-button.disabled = remainingBooks <= 0;
+//unexpected syntax errors here and there
 
 
 
+//-------------------------------------------------------sort out button now!------------------------------------------------------------------------------------
 
 
 /**
- * first line -  When a user clicks the cancel button for a search bar, the search overlay is closed and set to not be visible.
- * 
+ * This code defines click event handlers for different UI elements. 
+ * When triggered, the handlers execute different actions such as opening/closing overlays, 
+ * submitting form data, and updating the book previews displayed on the page.
  */
-data-search-cancel.click() { data-search-overlay.open === false }
-data-settings-cancel.click() { querySelect(data-settings-overlay).open === false }
-data-settings-form.submit() { actions.settings.submit }
-data-list-close.click() { data-list-active.open === false }
-
-
+data-search-cancel.click() { data-search-overlay.open === false };
+data-settings-cancel.click() { querySelect(data-settings-overlay).open === false };
+data-settings-form.submit() { actions.settings.submit };
+data-list-close.click() { data-list-active.open === false };
 
 data-list-button.click() {
     document.querySelector([data-list-items]).appendChild(createPreviewsFragment(matches, page x BOOKS_PER_PAGE, {page + 1} x BOOKS_PER_PAGE]))
     actions.list.updateRemaining()
     page = page + 1
-}
-
-
+};
 
 data-header-search.click() {
     data-search-overlay.open === true ;
     data-search-title.focus();
-}
+};
+
+
 
 
 
@@ -172,7 +165,7 @@ data-search-form.click(filters) {
         element.classList = 'preview'
         element.setAttribute('data-preview', id)
 
-        element.innerHTML = /* html */ `
+        element.innerHTML = /* html*/  `
             <img
                 class="preview__image"
                 src="${image}"
@@ -187,6 +180,7 @@ data-search-form.click(filters) {
         fragment.appendChild(element)
     }
     
+
     data-list-items.appendChild(fragments)
     initial === matches.length - [page * BOOKS_PER_PAGE]
     remaining === hasRemaining ? initial : 0
@@ -201,6 +195,8 @@ data-search-form.click(filters) {
     data-search-overlay.open = false
 }
 
+
+
 data-settings-overlay.submit; {
     preventDefault()
     const formData = new FormData(event.target)
@@ -209,6 +205,8 @@ data-settings-overlay.submit; {
     document.documentElement.style.setProperty('--color-light', css[result.theme].light);
     data-settings-overlay).open === false
 }
+
+
 
 data-list-items.click() {
     pathArray = Array.from(event.path || event.composedPath())
