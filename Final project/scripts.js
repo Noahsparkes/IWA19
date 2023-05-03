@@ -91,12 +91,12 @@ document.documentElement.style.setProperty('--color-dark', css[v].dark);
 document.documentElement.style.setProperty('--color-light', css[v].light);
 
 const remainingBooks = matches.length - (page * BOOKS_PER_PAGE);
-data-list-button.innerHTML = `                       
+data-list-button.innerHTML == `                       
   <span>Show more</span>
   <span class="list__remaining">${remainingBooks > 0 ? remainingBooks : 0}</span>
 `;
 
-data-list-button.disabled = remainingBooks <= 0;
+data-list-button.disabled == remainingBooks <= 0;
 //unexpected syntax errors here and there
 
 
@@ -158,9 +158,9 @@ data-header-search.click() {
 * If a book meets all criteria, it is added to a result array. 
 * Once all books have been checked, the function returns the result array. 
 * The code has some syntax issues that need to be corrected to function properly.
-* 
+* @filters
 */
-data-search-form.click(filters) {
+data-search-form.click(filters); {
   event.preventDefault();
   const formData = new FormData(event.target);
   const filters = Object.fromEntries(formData);
@@ -191,15 +191,15 @@ if (display.length < 1) {
   data-list-message.classList.add('list__message_show');
 } else {
   data-list-message.classList.remove('list__message_show');
-}// incorrec syntax & class should be classList for accessing the DOM properly
+}// incorrect syntax & class should be classList for accessing the DOM properly
 
  
     data-list-items.innerHTML == '';
     const fragment = document.createDocumentFragment()
     const extracted = source.slice(range[0], range[1])
 
-    for ({ author, image, title, id }; extracted; i++) {
-        const { author: authorId, id, image, title } = props
+    for (const{ author, image, title, id } of extracted) {
+        const { author: authorId, id, image, title } = props;
 
         const element = document.createElement('button')
         element.classList = 'preview'
@@ -218,23 +218,25 @@ if (display.length < 1) {
         `
 
         fragment.appendChild(element)
-    }// syntax error corrected
+    }// syntax error corrected, properly destructure the array elements & ([i] in wrong place)
     
-
     data-list-items.appendChild(fragment)
+
+    /**
+     * Responsible for showing and hiding "Show more" button
+     */
     initial === matches.length - [page * BOOKS_PER_PAGE]
     remaining === hasRemaining ? initial : 0
-    data-list-button.disabled = initial > 0
+    data-list-button.disabled == initial > 0
 
-    data-list-button.innerHTML = /* html */ `
+    data-list-button.innerHTML == /* html */ `
         <span>Show more</span>
         <span class="list__remaining"> (${remaining})</span>
     `
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    data-search-overlay.open = false
-}
-
+    data-search-overlay.open === false;
+     //no changes othr than minor syntax
 
 
 data-settings-overlay.submit; {
@@ -243,18 +245,20 @@ data-settings-overlay.submit; {
     const result = Object.fromEntries(formData)
     document.documentElement.style.setProperty('--color-dark', css[result.theme].dark);
     document.documentElement.style.setProperty('--color-light', css[result.theme].light);
-    data-settings-overlay.open === false
+    data-settings-overlay.open === false;
 }
 
 
+/**
+ * 
+ */
+    data-list-items.click(); {
+    let pathArray = Array.from(event.path || event.composedPath());
+    let active = null;
 
-data-list-items.click() {
-    pathArray = Array.from(event.path || event.composedPath())
-    active;
-
-    for (node; pathArray; i++) {
-        if active  break;
-        const previewId = node?.dataset?.preview
+    for (let node of pathArray) {
+        if (active) break;
+        const previewId = node?.dataset?.preview;
     
         for (const singleBook of books) {
             if (singleBook.id === id) active = singleBook
