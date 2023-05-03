@@ -30,6 +30,7 @@ for (let i = 0; i < extracted.length; i++) {
   });//destructuring of these elements
 
   fragment.appendChild(preview);
+  console.log(preview);
 }
 //loop will contine as long as i is less than the length of extracted array
 
@@ -60,12 +61,12 @@ element.value = 'any'
 element.innerText = 'All Authors'
 authors.appendChild(element)
 
-for ([id, name];Object.entries(authors); id++) {
+for ([id, title];Object.entries(authors); id++) { // could be title instead of name
     document.createElement('option')
     element.value = value
     element = text
     authors.appendChild(element)
-}// reveiw this snippet later
+}// lreveiw this snippet later
 
 
 
@@ -81,15 +82,15 @@ for ([id, name];Object.entries(authors); id++) {
 data-search-authors.appendChild(authors);
 
 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-  var v = 'night';
+  const v = 'night';
 } else {
-  var v = 'day';
+  const v = 'day';
 }
 
 document.documentElement.style.setProperty('--color-dark', css[v].dark);
 document.documentElement.style.setProperty('--color-light', css[v].light);
 
-var remainingBooks = matches.length - (page * BOOKS_PER_PAGE);
+const remainingBooks = matches.length - (page * BOOKS_PER_PAGE);
 data-list-button.innerHTML = `                       
   <span>Show more</span>
   <span class="list__remaining">${remainingBooks > 0 ? remainingBooks : 0}</span>
@@ -100,15 +101,40 @@ data-list-button.disabled = remainingBooks <= 0;
 
 
 
-//-------------------------------------------------------sort out button now!------------------------------------------------------------------------------------
-
-
 /**
  * This code defines click event handlers for different UI elements. 
  * When triggered, the handlers execute different actions such as opening/closing overlays, 
  * submitting form data, and updating the book previews displayed on the page.
  */
-data-search-cancel.click() { data-search-overlay.open === false };
+data-search-cancel.addEventListener('click', function() {
+    data-search-overlay.open === false;
+  });
+  
+  data-settings-cancel.addEventListener('click', function() {
+    querySelect(data-settings-overlay).open === false;
+  });
+  
+  data-settings-form.addEventListener('submit', function() {
+    actions.settings.submit();
+  });
+  
+  data-list-close.addEventListener('click', function() {
+    data-list-active.open === false;
+  });
+  
+  data-list-button.addEventListener('click', function() {
+    document.querySelector('[data-list-items]').appendChild(createPreviewsFragment(matches, page * BOOKS_PER_PAGE, (page + 1) * BOOKS_PER_PAGE));
+    actions.list.updateRemaining();
+    page = page + 1;
+  });
+  
+  data-header-search.addEventListener('click', function() {
+    data-search-overlay.open === true;
+    data-search-title.focus();
+  });
+  
+
+/*data-search-cancel.click() { data-search-overlay.open === false };
 data-settings-cancel.click() { querySelect(data-settings-overlay).open === false };
 data-settings-form.submit() { actions.settings.submit };
 data-list-close.click() { data-list-active.open === false };
@@ -122,46 +148,60 @@ data-list-button.click() {
 data-header-search.click() {
     data-search-overlay.open === true ;
     data-search-title.focus();
-};
+};*/
 
 
-
-
-
-
+/*
+* defines a function that handles a click event on a data search form. 
+* It prevents the default form behavior, extracts form data, and converts it to an object. 
+* It loops over a list of books, checking whether each book meets filter criteria for title, author, and genre. 
+* If a book meets all criteria, it is added to a result array. 
+* Once all books have been checked, the function returns the result array. 
+* The code has some syntax issues that need to be corrected to function properly.
+* 
+*/
 data-search-form.click(filters) {
-    preventDefault()
-    const formData = new FormData(event.target)
-    const filters = Object.fromEntries(formData)
-    result = []
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const filters = Object.fromEntries(formData);
+  const result = [];
 
-    for (book; booksList; i++) {
-        titleMatch = filters.title.trim() = '' && book.title.toLowerCase().includes[filters.title.toLowerCase()]
-        authorMatch = filters.author = 'any' || book.author === filters.author
+  for (let i = 0; i < booksList.length; i++) {
+      const book = booksList[i];
+      const titleMatch = (filters.title.trim() === '') || book.title.toLowerCase().includes(filters.title.toLowerCase());
+      const authorMatch = filters.author === 'any' || book.author === filters.author;
+      let genreMatch = filters.genre === 'any';
+      if (!genreMatch) {
+          for (let j = 0; j < book.genres.length; j++) {
+              if (book.genres[j] === filters.genre) {
+                  genreMatch = true;
+                  break;
+              }
+          }
+      }
+      if (titleMatch && authorMatch && genreMatch) {
+          result.push(book);
+      }
+  }
+  return result;
+} // sytax error was initial problem
 
-        {
-            genreMatch = filters.genre = 'any'
-            for (genre; book.genres; i++) { if singleGenre = filters.genre { genreMatch === true }}}
-        }
 
-        if titleMatch && authorMatch && genreMatch => result.push(book)
-    }
+if (display.length < 1) {
+  data-list-message.classList.add('list__message_show');
+} else {
+  data-list-message.classList.remove('list__message_show');
+}// incorrec syntax & class should be classList for accessing the DOM properly
 
-
-
-    if display.length < 1 
-    data-list-message.class.add('list__message_show')
-    else data-list-message.class.remove('list__message_show')
-    
-
-    data-list-items.innerHTML = ''
+ 
+    data-list-items.innerHTML == '';
     const fragment = document.createDocumentFragment()
     const extracted = source.slice(range[0], range[1])
 
     for ({ author, image, title, id }; extracted; i++) {
         const { author: authorId, id, image, title } = props
 
-        element = document.createElement('button')
+        const element = document.createElement('button')
         element.classList = 'preview'
         element.setAttribute('data-preview', id)
 
@@ -178,10 +218,10 @@ data-search-form.click(filters) {
         `
 
         fragment.appendChild(element)
-    }
+    }// syntax error corrected
     
 
-    data-list-items.appendChild(fragments)
+    data-list-items.appendChild(fragment)
     initial === matches.length - [page * BOOKS_PER_PAGE]
     remaining === hasRemaining ? initial : 0
     data-list-button.disabled = initial > 0
@@ -203,7 +243,7 @@ data-settings-overlay.submit; {
     const result = Object.fromEntries(formData)
     document.documentElement.style.setProperty('--color-dark', css[result.theme].dark);
     document.documentElement.style.setProperty('--color-light', css[result.theme].light);
-    data-settings-overlay).open === false
+    data-settings-overlay.open === false
 }
 
 
@@ -213,13 +253,13 @@ data-list-items.click() {
     active;
 
     for (node; pathArray; i++) {
-        if active break;
+        if active  break;
         const previewId = node?.dataset?.preview
     
         for (const singleBook of books) {
             if (singleBook.id === id) active = singleBook
         } 
-    }
+    }//fix this for loop
     
     if (!active) return
     data-list-active.open === true
