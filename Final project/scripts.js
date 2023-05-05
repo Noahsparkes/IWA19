@@ -6,16 +6,6 @@ if (!books || !Array.isArray(books)) {
 // Declare and initialize an array variable 'matches' with a value of 'books'
 let matches = [...books];
 
-// Define the selectors for the search input
-/*const selectors = {
-  searchBtn: '[data-header-search]',
-  cancelBtn: '[data-search-cancel]',
-  genres: '[data-search-genres]',
-  authors: '[data-search-authors]',
-  form: '[data-search-form]',
-};*/
-
-
 // bookview
 const dataListItems = document.querySelector("[data-list-items]");
 const dataListButton = document.querySelector("[data-list-button]");
@@ -318,37 +308,7 @@ dataListButton.innerHTML = /* html */ `
 
 `;
 
-/**
- * defines click event handlers for different User Inteface elements. 
- * When triggered, the handlers execute different actions such as opening/closing overlays, 
- * submitting form data, and updating the book previews displayed on the page.
- *
-/*data-search-cancel.addEventListener('click', function() {
-  data-search-overlay.open === false;
-});
 
-data-settings-cancel.addEventListener('click', function() {
-  querySelect(data-settings-overlay).open === false;
-});
-
-data-settings-form.addEventListener('submit', function() {
-  actions.settings.submit();
-});
-
-data-list-close.addEventListener('click', function() {
-  data-list-active.open === false;
-});
-
-data-list-button.addEventListener('click', function() {
-  document.querySelector('[data-list-items]').appendChild(createPreviewsFragment(matches, page * BOOKS_PER_PAGE, (page + 1) * BOOKS_PER_PAGE));
-  actions.list.updateRemaining();
-  page = page + 1;
-});
-
-data-header-search.addEventListener('click', function() {
-  data-search-overlay.open === true;
-  data-search-title.focus();
-});*/
 
 
 
