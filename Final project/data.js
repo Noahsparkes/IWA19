@@ -89,8 +89,7 @@ const BOOKS_PER_PAGE = 36;
   "39a23579-f473-44a1-b22f-58b5036d3e3b": "Jane Austen",
   "b9cd8a1d-0586-4cb2-9b1a-e3d9dce79faf": "Anna Quindlen",
   "37018341-31f4-4ffa-8755-a49979c218dd": "Suzanne Collins"
-}
-
+} 
 export const genres = {
   "a4f80b3e-3e96-4266-b729-e09b71793182": "Economics",
   "6dd5bb6e-0172-4d6e-aa18-26f00954dd7a": "Non-fiction",
